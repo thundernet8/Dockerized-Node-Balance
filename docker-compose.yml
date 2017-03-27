@@ -1,0 +1,67 @@
+version: "2"
+
+services:
+  redis:
+    restart: always
+    image: redis:latest
+    ports:
+      - "6379"
+  mongo:
+    restart: always
+    image: mongo:latest
+    ports:
+      - "27017"
+  nodeapp1:
+    build:
+      context: ./node
+      dockerfile: Dockerfile
+    restart: always
+    links:
+      - redis
+      - mongo
+    ports:
+      - "8080"
+    networks:
+      - front-tier
+
+  nodeapp2:
+    build:
+      context: ./node
+      dockerfile: Dockerfile
+    restart: always
+    links:
+      - redis
+      - mongo
+    ports:
+      - "8080"
+    networks:
+      - front-tier
+
+  nodeapp3:
+    build:
+      context: ./node
+      dockerfile: Dockerfile
+    restart: always
+    links:
+      - redis
+      - mongo
+    ports:
+      - "8080"
+    networks:
+      - front-tier
+  
+  nginx:
+    build: ./nginx
+    restart: always
+    links:
+      - nodeapp1
+      - nodeapp2
+      - nodeapp3
+    ports:
+      - "80:80"
+    networks:
+      - front-tier
+
+networks:
+  front-tier:
+    driver: bridge
