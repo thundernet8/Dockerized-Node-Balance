@@ -5,6 +5,9 @@ RUN mkdir -p /src
 # 任何RUN命令均在此目录执行
 WORKDIR /src
 
+# 使用淘宝NPM镜像
+COPY .npmrc /root/.npmrc
+
 # 安装NodeAPP的包依赖，install后可附带 -- production参数以忽略开发依赖
 COPY package.json /src/
 RUN npm install

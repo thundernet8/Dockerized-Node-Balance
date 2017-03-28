@@ -21,6 +21,9 @@ services:
       - mongo
     ports:
       - "8080"
+    # volumes:
+    #   - /Users/X/XX:/src
+    #   - /Users/X/XX/.npm:/root/.npm
     networks:
       - front-tier
 
