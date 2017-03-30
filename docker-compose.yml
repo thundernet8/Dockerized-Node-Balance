@@ -6,11 +6,15 @@ services:
     image: redis:latest
     ports:
       - "6379"
+    networks:
+      - front-tier
   mongo:
     restart: always
     image: mongo:latest
     ports:
       - "27017"
+    networks:
+      - front-tier
   nodeapp1:
     build:
       context: ./node
